@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Grid } from "semantic-ui-react";
 import ActivityStore from "../../../app/stores/activityStore";
 import { observer } from "mobx-react-lite";
-import { RouteComponentProps} from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import ActivityDetailedHeader from "../Details/ActivityDetailedHeader";
 import ActivityDetailedInfo from "../Details/ActivityDetailedInfo";
@@ -22,14 +22,19 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
 
   useEffect(() => {
     loadActivity(match.params.id);
+    
   }, [loadActivity, match.params.id]);
 
   if (loadingInitial) return <LoadingComponent content="Loading Activity..." />;
+
+  if (!selectedActivity) {
+    return <h2>Activity Not Found</h2>;
+  }
   return (
     <Grid>
       <Grid.Column width={10}>
-        <ActivityDetailedHeader selectedActivity={selectedActivity}/>
-        <ActivityDetailedInfo selectedActivity={selectedActivity}/>
+        <ActivityDetailedHeader selectedActivity={selectedActivity} />
+        <ActivityDetailedInfo selectedActivity={selectedActivity} />
         <ActivityDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>

@@ -1,8 +1,11 @@
 import React from "react";
 import { Segment, Grid, Icon } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
+import { format } from "date-fns";
 
-const ActivityDetailedInfo:React.FC<{selectedActivity:IActivity|null}> = ({selectedActivity}) => {
+const ActivityDetailedInfo: React.FC<{
+  selectedActivity: IActivity;
+}> = ({ selectedActivity }) => {
   return (
     <div>
       <Segment.Group>
@@ -12,7 +15,7 @@ const ActivityDetailedInfo:React.FC<{selectedActivity:IActivity|null}> = ({selec
               <Icon size="large" color="teal" name="info" />
             </Grid.Column>
             <Grid.Column width={15}>
-              <p>{selectedActivity?.description}</p>
+              <p>{selectedActivity.description}</p>
             </Grid.Column>
           </Grid>
         </Segment>
@@ -22,7 +25,10 @@ const ActivityDetailedInfo:React.FC<{selectedActivity:IActivity|null}> = ({selec
               <Icon name="calendar" size="large" color="teal" />
             </Grid.Column>
             <Grid.Column width={15}>
-              <span>{selectedActivity?.date}</span>
+              <span>
+                {format(selectedActivity.date, "eeee do MMMM")} at{" "}
+                {format(selectedActivity.date, "h:mm a")}
+              </span>
             </Grid.Column>
           </Grid>
         </Segment>
@@ -33,7 +39,7 @@ const ActivityDetailedInfo:React.FC<{selectedActivity:IActivity|null}> = ({selec
             </Grid.Column>
             <Grid.Column width={11}>
               <span>
-                {selectedActivity?.venue}, {selectedActivity?.city}
+                {selectedActivity.venue}, {selectedActivity.city}
               </span>
             </Grid.Column>
           </Grid>

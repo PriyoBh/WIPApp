@@ -2,6 +2,8 @@ import React from "react";
 import { Segment, Item, Header, Button, Image } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 const activityImageStyle = {
   filter: "brightness(30%)",
@@ -17,14 +19,14 @@ const activityImageTextStyle = {
 };
 
 const ActivityDetailedHeader: React.FC<{
-  selectedActivity: IActivity | null;
+  selectedActivity: IActivity;
 }> = ({ selectedActivity }) => {
   return (
     <div>
       <Segment.Group>
         <Segment basic attached="top" style={{ padding: "0" }}>
           <Image
-            src={`/assets/categoryImages/${selectedActivity?.category}.jpg`}
+            src={`/assets/categoryImages/${selectedActivity.category}.jpg`}
             fluid
             style={activityImageStyle}
           />
@@ -34,10 +36,10 @@ const ActivityDetailedHeader: React.FC<{
                 <Item.Content>
                   <Header
                     size="huge"
-                    content={selectedActivity?.title}
+                    content={selectedActivity.title}
                     style={{ color: "white" }}
                   />
-                  <p>{selectedActivity?.date}</p>
+                  <p>{format(selectedActivity.date, "eeee do MMMM")}</p>
                   <p>
                     Hosted by <strong>Bob</strong>
                   </p>
@@ -49,7 +51,12 @@ const ActivityDetailedHeader: React.FC<{
         <Segment clearing attached="bottom">
           <Button color="teal">Join Activity</Button>
           <Button>Cancel attendance</Button>
-          <Button color="orange" floated="right">
+          <Button
+            as={Link}
+            to={`/manage/${selectedActivity.id}`}
+            color="orange"
+            floated="right"
+          >
             Manage Event
           </Button>
         </Segment>
